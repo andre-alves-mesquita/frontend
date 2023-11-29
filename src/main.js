@@ -1,17 +1,16 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import Antd from 'ant-design-vue';
-import 'ant-design-vue/dist/reset.css';
-import { BootstrapVue } from 'bootstrap-vue'
+
 
 import App from './App.vue'
 import router from './router'
+import { Quasar } from 'quasar'
+import quasarUserOptions from './quasar-user-options'
 
-const app = createApp(App)
+const app = createApp(App).use(Quasar, quasarUserOptions)
 
 app.use(createPinia())
 app.use(router)
-app.use(Antd)
-app.use(BootstrapVue)
+
 
 app.mount('#app')
