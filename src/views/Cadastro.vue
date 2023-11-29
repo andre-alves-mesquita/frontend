@@ -21,8 +21,8 @@
                         </q-card-section>
                         <q-card-section class="text-center q-pt-none">
                             <div class="text-grey-8">Já possui uma conta?
-                                <router-link to="/" class="text-dark text-weight-bold"
-                                    style="text-decoration: none">Logar</router-link>
+                                <router-link to="/" class="text-dark text-weight-bold" style="text-decoration: none"
+                                    v-on:click="reload()">Logar</router-link>
                             </div>
                         </q-card-section>
                     </q-form>
@@ -80,6 +80,11 @@ export default {
         }
     },
     methods: {
+        reload: function () {
+            setTimeout(() => {
+                window.location.reload()
+            }, 500);
+        },
         async getPosts(data) {
             console.log(data[0])
             // this.posts = await axios.post('http://localhost:8000/api/user', { email: "" }).then((response) => {
