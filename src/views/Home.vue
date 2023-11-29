@@ -1,5 +1,6 @@
 <template>
     <q-layout view="lHh Lpr lFf" v-if="logged === true">
+        {{ logged }}
         <q-header elevated class="glossy">
             <q-toolbar>
                 <q-btn flat dense round @click="leftDrawerOpen = !leftDrawerOpen" aria-label="Menu" icon="menu" />
