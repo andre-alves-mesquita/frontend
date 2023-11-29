@@ -19,8 +19,8 @@
                         </q-card-section>
                         <q-card-section class="text-center q-pt-none">
                             <div class="text-grey-8">Não tem uma conta ainda
-                                <router-link to="/cadastro" class="text-dark text-weight-bold"
-                                    style="text-decoration: none">Criar
+                                <router-link to="/cadastro" class="text-dark text-weight-bold" style="text-decoration: none"
+                                    v-on:click="reload()">Criar
                                     conta</router-link>
                             </div>
                         </q-card-section>
@@ -34,6 +34,7 @@
 <script>
 import axios from 'axios'
 import { ref } from 'vue'
+import { loadState, removeState, saveState } from '../localStorage'
 
 export default {
     setup() {
@@ -62,6 +63,9 @@ export default {
                 })
 
                 console.log(resposta)
+
+                saveState("user", { logged: true })
+                window.location.reload()
             }
         }
     },
@@ -72,6 +76,11 @@ export default {
         }
     },
     methods: {
+        reload: function () {
+            setTimeout(() => {
+                window.location.reload()
+            }, 500);
+        },
         async getPosts(data) {
             console.log(data[0])
             // this.posts = await axios.post('http://localhost:8000/api/user', { email: "" }).then((response) => {
