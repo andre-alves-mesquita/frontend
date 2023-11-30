@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-import Login from '../views/Login.vue'
+import Upload from '../views/Upload.vue'
+import GerenciarUpload from '../views/GerenciarUpload.vue'
 import Cadastro from '../views/Cadastro.vue'
 
 const router = createRouter({
@@ -12,9 +13,14 @@ const router = createRouter({
       component: Home
     },
     {
-      path: '/about',
-      name: 'about',
-      component: Login
+      path: '/upload',
+      name: 'upload',
+      component: Upload
+    },
+    {
+      path: '/gerenciar-upload',
+      name: 'gerenciar-upload',
+      component: GerenciarUpload
     },
     {
       path: '/cadastro',

@@ -64,7 +64,7 @@ export default {
 
                 console.log(resposta)
 
-                saveState("user", { logged: true })
+                saveState("user", { logged: true, token: resposta.access_token })
                 window.location.reload()
             }
         }

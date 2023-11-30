@@ -8,35 +8,39 @@
           Upload App
         </q-toolbar-title>
 
-        <span style="display: flexbox; justify-content: center;" v-on:click="deslogar" clickable><q-icon name="logout"
-            style="margin-right: 4px;" />Deslogar</span>
+        <q-item clickable style="display: flex; justify-content: center;align-items: center;">
+          <span style="display: flexbox; justify-content: center;" v-on:click="deslogar" clickable><q-icon name="logout"
+              style="margin-right: 4px;" />Deslogar</span>
+        </q-item>
       </q-toolbar>
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered class="bg-grey-2">
       <q-list>
         <q-item-label header>Links</q-item-label>
-        <q-item clickable tag="a" href="https://quasar.dev">
-          <q-item-section avatar>
-            <q-icon name="upload" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Upload Arquivos</q-item-label>
-            <q-item-label caption>Suba seus arquivos para o servidor</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item clickable tag="a" href="https://github.com/quasarframework/">
-          <q-item-section avatar>
-            <q-icon name="recommended" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Gerenciar Upload</q-item-label>
-            <q-item-label caption>Autorize os uploads</q-item-label>
-          </q-item-section>
+        <router-link to="/upload" class="text-dark text-weight-bold" style="text-decoration: none">
+          <q-item clickable>
+            <q-item-section avatar>
+              <q-icon name="upload" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Upload Arquivos</q-item-label>
+              <q-item-label caption>Suba seus arquivos para o servidor</q-item-label>
+            </q-item-section>
+          </q-item>
+        </router-link>
+        <router-link to="/gerenciar-upload" class="text-dark text-weight-bold" style="text-decoration: none">
+          <q-item clickable>
+            <q-item-section avatar>
+              <q-icon name="recommended" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Gerenciar Upload</q-item-label>
+              <q-item-label caption>Autorize os uploads</q-item-label>
+            </q-item-section>
 
-          <router-link to="/cadastro" class="text-dark text-weight-bold" style="text-decoration: none">Criar
-            conta</router-link>
-        </q-item>
+          </q-item>
+        </router-link>
       </q-list>
     </q-drawer>
 
@@ -57,9 +61,12 @@ import Login from './views/Login.vue';
 import { loadState, removeState, saveState } from './localStorage'
 import { externalVerify } from './external'
 import Cadastro from './views/Cadastro.vue';
+import axios from 'axios'
 
 
 export default {
+
+
   name: 'LayoutDefault',
 
 
@@ -77,9 +84,21 @@ export default {
     }
   },
   methods: {
-    deslogar: function () {
-      removeState("user")
-      window.location.reload()
+    deslogar: async function () {
+      let user = loadState("user")
+
+      console.log(user.token)
+
+      await axios.get('http://localhost:8000/api/user-logout', {
+        headers: {
+          'Authorization': `Bearer ${user.token}`,
+        }
+      }).then((response) => {
+        removeState("user")
+        window.location.reload()
+        return response.data
+
+      })
     },
   }
 }
